@@ -1,0 +1,1090 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    color: $carbon;
+}
+
+@media (min-width: 1440px) {
+    .container {
+        max-width: 1440px;
+    }
+}
+
+//header
+header {
+    background: white;
+    padding: 20px 0;
+    position: relative;
+    z-index: 1;
+    @include respond-to(small) {
+        padding: 34px 0 31px 0;
+    }
+    &.inner-header {
+        border-bottom: 1px solid $gray;
+        ;
+    }
+    .container {
+        @media (max-width: 767px) {
+            max-width: 100%;
+        }
+    }
+    .logo-wrap {
+        @media (max-width: 479px) {
+            margin: 0 auto;
+        }
+        @media (min-width:1300px) {
+            flex: 0 0 25%;
+            max-width: 25%;
+        }
+    }
+    .logo {
+        width: 200px;
+        margin: 0 auto;
+        @include respond-to(small-xs) {
+            margin: inherit;
+            padding-top: 0;
+        }
+        @include respond-to(large){
+            padding-top:8px;
+        }
+        a {
+            display: block;
+        }
+    }
+    .parter-logo-wrap {
+        @media (max-width: 479px) {
+            margin: 0 auto;
+        }
+        @media (min-width:1300px) {
+            flex: 0 0 75%;
+            max-width: 75%;
+        }
+    }
+    .partner-logos {
+        text-align: center;
+        margin-top: 20px;
+        @include respond-to(small-xs) {
+            text-align: left;
+        }
+        @include respond-to(medium) {
+            margin-top: 0;
+            float: right;
+        }
+        ul {
+            margin: 0;
+            padding: 0;
+            @include respond-to(small-xs){
+                display: flex;
+            }
+            li {
+                list-style-type: none;
+                display: inline-block;
+                padding: 0;
+                margin-bottom: 20px;
+                @include respond-to(large){
+                    margin-bottom: 0;
+                }
+                p {
+                    margin: 0;
+                }
+                &.intel-logo {
+                    width: 60px;
+                    margin-right: 10px;
+                    margin-top: 0;
+                    margin-bottom: 10px;
+                    img {
+                        max-width: 100%;
+                        @include respond-to(large) {
+                            width: 90px;
+                        }
+                    }
+                    @include respond-to(large) {
+                        width: 90px;
+                        display: inline-block;
+                        margin-right: 28px;
+                        margin-top: -40px;
+                        margin-bottom: 0px;
+                    }
+                }
+                &.ms-logo {
+                    @include respond-to(small-xs) {
+                        text-align: left;
+                    }
+                    @include respond-to(large) {
+                        vertical-align: top;
+                    }
+                    img {
+                        margin-bottom: 10px;
+                        height: 24px;
+                        @include respond-to(large) {
+                            height: 34px;
+                            margin-bottom: 0;
+                        }
+                    }
+                    p {
+                        margin: 0;
+                        font-size: 16px;
+                        font-weight: 600;
+                        color: $carbon;
+                    }
+                    @media (max-width:767px) {
+                        //width: 100%;
+                        img {
+                            max-width: 100%;
+                        }
+                    }
+                    // @media (max-width:479px) {
+                    //     width: 120px;
+                    // }
+                }
+                &.ms-logo-slogan {
+                    position: relative;
+                    img{
+                        margin-bottom: 15px;
+                        height: 26px;
+                        @include respond-to(small){
+                            height: 34px;
+                        }
+                        @include respond-to(large){
+                            margin-bottom: 33px;
+                        }
+                    }
+                    @include respond-to(small-xs){
+                        padding-left: 15px;
+                    }
+                    @include respond-to(large) {
+                        padding-left: 34px;
+                    }
+                    p {
+                        font-size: 14px;
+                        line-height: 18px;
+                        letter-spacing: -0.1px;
+                        @include respond-to(large) {
+                            line-height: 15px;
+                        }
+                    }
+                    &.windows-10{
+                        padding-left:0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+//banner
+.hero-banner {
+    @include background;
+    height: 320px;
+    @include respond-to(small-xs) {
+        height: 450px;
+    }
+    @include respond-to(small) {
+        height: 700px;
+    }
+    @include respond-to(large) {
+        height: 826px;
+    }
+    &.inner-banner {
+        height: auto;
+        margin-bottom: 30px;
+        ;
+        @include respond-to(small) {
+            margin-bottom: 55px;
+            ;
+        }
+    }
+    .container {
+        @media (max-width: 767px) {
+            max-width: 480px;
+        }
+    }
+    .logos-container {
+        ul {
+            margin: 10px 0 0 0;
+            padding: 0;
+            list-style-type: none;
+            text-align: center;
+            @include respond-to(small-xs) {
+                text-align: right;
+            }
+            @include respond-to(small) {
+                margin: 25px 0 0 0;
+            }
+            li {
+                display: inline-block;
+                text-align: right;
+                margin: 0 0 0 10px;
+                @include respond-to(small) {
+                    margin: 0 0 0 20px;
+                }
+                &.ingram-logo {
+                    @media (max-width: 767px) {
+                        width: 80px;
+                        img {
+                            max-width: 100%;
+                        }
+                    }
+                    @include respond-to(small) {
+                        img {
+                            height: 20px;
+                        }
+                    }
+                }
+                &.mca-logo {
+                    @media (max-width: 767px) {
+                        width: 80px;
+                        img {
+                            max-width: 100%;
+                        }
+                    }
+                    @include respond-to(small) {
+                        img {
+                            height: 25px;
+                        }
+                    }
+                }
+                &.tech-data-logo {
+                    @media (max-width: 767px) {
+                        width: 80px;
+                        img {
+                            max-width: 100%;
+                        }
+                    }
+                    @include respond-to(small) {
+                        img {
+                            height: 24px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .hero-content-wrap {
+        position: relative;
+        .tag-image{
+            width: 100px;
+            position: absolute;
+            right: 2%;
+            top:40%;
+            img{
+                max-width: 100%;
+            }
+            @include respond-to(small-xs){
+                width:100px;
+                right: -8%;
+                top:40%;
+            }
+            @include respond-to(small){
+                width:145px;
+                right: -3%;
+                top:50%;
+            }
+            @include respond-to(medium){
+                width:145px;
+                right: -3%;
+                top:24%;
+            }
+            @include respond-to(large){
+                width:160px;
+                right: -2%;
+                top:25%;
+            }
+            
+            @include respond-to(x-large){
+                width:210px;
+                right: -6%;
+                top:23%;
+            }
+            @media (min-width:1440px){
+                
+                width:260px;
+                right: 1%;
+                top:20%;
+            }
+            @include respond-to(xx-large){
+                width:400px;
+                right: -8%;
+                top:11%;
+            }
+        }
+        .hero-content {
+            margin-top: 30px;
+            @include respond-to(small-xs) {
+                margin-top: 55px;
+            }
+            @include respond-to(small) {
+                margin-top: 70px;
+            }
+            @include respond-to(medium) {
+                margin-top: 50px;
+            }
+            @include respond-to(large) {
+                margin-top: 85px;
+            }
+            h1 {
+                font-size: 30px;
+                letter-spacing: 3px;
+                color: white;
+                font-weight: bold;
+                @include respond-to(small-xs) {
+                    font-size: 40px;
+                    letter-spacing: 5px;
+                }
+                @include respond-to(small) {
+                    font-size: 80px;
+                    letter-spacing: 0;
+                    ;
+                }
+                @include respond-to(medium) {
+                    font-size: 100px;
+                }
+                @include respond-to(large) {
+                    font-size: 105px;
+                    letter-spacing: 8px;
+                }
+                @include respond-to(xx-large) {
+                    letter-spacing: 17px;
+                }
+                @include respond-to(xx-large) {
+                    letter-spacing: 17px;
+                }
+            }
+            p {
+                font-size: 20px;
+                color: white;
+                letter-spacing: 1px;
+                margin: 0;
+                @include respond-to(small-xs) {
+                    font-size: 25px;
+                }
+                @include respond-to(small) {
+                    font-size: 35px;
+                }
+                @include respond-to(medium) {
+                    font-size: 45px;
+                }
+            }
+        }
+        .btn-primary {
+            background: $light-blue;
+            min-height: 50px;
+            padding: 5px 10px;
+            margin-top: 15px;
+            font-family: "Roboto", sans-serif;
+            font-size: 16px;
+            font-weight: 400;
+            border: none;
+            box-shadow: 0 0px 20px 5px rgba(white, 0.2);
+            @include respond-to(small-xs) {
+                font-size: 18px;
+                padding: 5px 30px;
+                margin-top: 25px;
+            }
+            @include respond-to(medium) {
+                font-size: 22px;
+            }
+            &:hover {
+                background: $dell-blue;
+            }
+        }
+    }
+}
+
+//content
+.discount-section {
+    padding-bottom: 50px;
+    @include respond-to(small) {
+        margin-top: -40px;
+    }
+    h2 {
+        font-size: 25px;
+        color: $dell-blue;
+        margin: 25px 0;
+        @include respond-to(small) {
+            font-size: 38px;
+        }
+    }
+    p {
+        margin-bottom: 15px;
+    }
+    .btn-primary {
+        background: $midnight-blue;
+        min-height: 50px;
+        padding: 0 15px;
+        font-family: "Roboto", sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+        border: none;
+        margin: 10px 0 35px 0;
+        box-shadow: 0 0px 20px 5px rgba(white, 0.2);
+        @include respond-to(small) {
+            font-size: 20px;
+        }
+        &:hover {
+            background: $dell-blue;
+        }
+    }
+    .btn-secondary {
+        background: $light-blue;
+        min-height: 50px;
+        min-width: 200px;
+        line-height: 50px;
+        padding: 0 15px;
+        font-family: "Roboto", sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+        border: none;
+        margin: 5px 7px 20px 7px;
+        box-shadow: 0 0px 20px 5px rgba(white, 0.2);
+        @include respond-to(small) {
+            font-size: 20px;
+        }
+        &:hover {
+            background: $dell-blue;
+        }
+    }
+    .video{
+        img{
+            max-width: 100%;
+            @include respond-to(small){
+                max-width: 560px;
+            }
+        }
+        iframe{
+            @media (max-width:767px){
+                width:100%;
+                height: auto;
+            }
+        }
+    }
+}
+
+//How it works
+.howitworks {
+    background: $quartz;
+    padding: 45px 0;
+    .container {
+        @include respond-to(large) {
+            max-width: 1140px;
+        }
+    }
+    h2 {
+        font-size: 24px;
+        color: $carbon;
+        text-align: center;
+        margin: 15px 0 40px 0;
+    }
+    ul {
+        float: left;
+        padding: 0 10px;
+        margin: 0;
+        @include respond-to(small) {
+            width: 50%;
+        }
+        li {
+            min-height: 50px;
+            margin: 0 0 22px 0;
+            position: relative;
+            list-style-type: none;
+            padding-left: 70px;
+            font-size: 16px;
+            color: $carbon;
+            display: flex;
+            align-items: center;
+            vertical-align: middle;
+            span {
+                background: $dell-blue;
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 50px;
+                height: 50px;
+                color: white;
+                font-size: 35px;
+                font-weight: bold;
+                text-align: center;
+                line-height: 50px;
+                @include border-radius(50px);
+            }
+            p {
+                margin: 0;
+                line-height: 24px;
+            }
+            &:before {
+                content: "";
+                position: absolute;
+                left: 24px;
+                top: 50px;
+                height: 100%;
+                width: 2px;
+                background: $dell-blue;
+            }
+            &:last-child {
+                &:before {
+                    display: none;
+                }
+            }
+        }
+        &.howitworks-first {
+            li {
+                &:last-child {
+                    &::after {
+                        @media (max-width: 767px) {
+                            content: "";
+                            position: absolute;
+                            left: 24px;
+                            top: 50px;
+                            height: 100%;
+                            width: 2px;
+                            background: $dell-blue;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+//FAQ
+.faq {
+    padding: 60px 0;
+    .container {
+        @include respond-to(large) {
+            max-width: 930px;
+        }
+    }
+    h2 {
+        font-size: 24px;
+        color: $carbon;
+        text-align: center;
+    }
+    .accordion {
+        margin-top: 35px;
+    }
+    .card {
+        border: none;
+        .card-header {
+            background: none;
+            margin-bottom: 0;
+            padding: 0;
+            border-bottom: 1px solid rgba(black, 0.2);
+        }
+        .card-body {
+            font-size: 14px;
+            color: $carbon;
+            line-height: 24px;
+            padding: 15px 30px 30px 32px;
+        }
+        h2 {
+            text-align: left;
+            .btn {
+                width: 100%;
+                padding: 10px 0 10px 32px;
+                text-align: left;
+                display: block;
+                position: relative;
+                font-weight: 500;
+                font-size: 16px;
+                color: $dell-blue;
+                &:hover {
+                    color: $dell-blue;
+                    text-decoration: none;
+                }
+                &:focus {
+                    text-decoration: none;
+                    outline: none;
+                }
+                &:after {
+                    content: "";
+                    position: absolute;
+                    top: 15px;
+                    right: 0;
+                    background: url('../images/down-arrow.png') no-repeat right center;
+                    background-size: 15px;
+                    width: 15px;
+                    height: 9px;
+                    @include transform(rotate(-180deg));
+                }
+                &::before {
+                    content: "";
+                    width: 12px;
+                    height: 12px;
+                    background: $dell-blue;
+                    display: block;
+                    position: absolute;
+                    top: 15px;
+                    left: 0px;
+                    @include border-radius(12px);
+                }
+                &.collapsed {
+                    color: $carbon;
+                    &::before {
+                        content: "";
+                        background: none;
+                        border: 2px solid $carbon;
+                    }
+                    &:after {
+                        content: "";
+                        opacity: 0.7;
+                        @include transform(rotate(0deg));
+                    }
+                }
+            }
+        }
+    }
+}
+
+//footer
+footer {
+    background: $dell-blue;
+    padding: 20px 0;
+    ul {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+        text-align: center;
+        li {
+            display: inline-block;
+            margin: 5px;
+            padding: 0 10px;
+            position: relative;
+            &:before {
+                content: "|";
+                color: white;
+                position: absolute;
+                top: 0;
+                left: -8px;
+            }
+            &:first-child {
+                padding-left: 0;
+                margin-left: 0;
+                &:before {
+                    display: none;
+                }
+            }
+            &:last-child {
+                padding-right: 0;
+                margin-right: 0;
+            }
+            a {
+                font-size: 14px;
+                line-height: 24px;
+                font-weight: 400;
+                color: white;
+                &:hover {
+                    color: rgba(white, 0.8);
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+}
+
+//pop up wizard
+.laremise-modal {
+    .modal-dialog {
+        @include respond-to(small) {
+            max-width: 634px;
+            margin-top: 75px;
+        }
+        .modal-content {
+            padding: 50px 15px 30px 15px;
+            border: none;
+            @include respond-to(small) {
+                padding: 50px 60px;
+            }
+            .close {
+                width: 22px;
+                height: 22px;
+                font-weight: 400;
+                font-size: 22px;
+                line-height: 12px;
+                color: $dell-blue;
+                padding: 0 0 0 1px;
+                opacity: 1;
+                text-shadow: none;
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                border: 2px solid $dell-blue;
+                &:hover {
+                    opacity: 0.5;
+                }
+            }
+            .modal-body {
+                padding: 0;
+                form {
+                    margin-bottom: 0;
+                    .steps-wrap {
+                        text-align: center;
+                        margin-bottom: 40px;
+                        .step {
+                            width: 30px;
+                            height: 30px;
+                            background: white;
+                            font-size: 18px;
+                            text-align: center;
+                            line-height: 26px;
+                            margin: 0 10px;
+                            display: inline-block;
+                            border: 2px solid $carbon;
+                            position: relative;
+                            @include border-radius(20px);
+                            @include respond-to(small) {
+                                width: 45px;
+                                height: 45px;
+                                font-size: 24px;
+                                line-height: 40px;
+                                margin: 0 20px;
+                                @include border-radius(45px);
+                            }
+                            &.active,
+                            &.finish {
+                                background: $light-blue;
+                                border: 2px solid $light-blue;
+                                color: white;
+                            }
+                            &:before {
+                                content: "";
+                                width: 24px;
+                                height: 1px;
+                                background: $gray;
+                                position: absolute;
+                                top: 50%;
+                                left: -100%;
+                                margin-top: -1px;
+                                @include respond-to(small) {
+                                    width: 44px;
+                                    margin-left: -5px;
+                                }
+                            }
+                            &:first-child {
+                                &:before {
+                                    display: none;
+                                    ;
+                                }
+                            }
+                        }
+                    }
+                }
+                input.invalid {
+                    background-color: #ffdddd;
+                }
+                .tab {
+                    display: none;
+                    text-align: center;
+                    &.final-tab {
+                        padding: 150px 0;
+                    }
+                    h3 {
+                        font-size: 25px;
+                        color: $carbon;
+                        font-weight: 400;
+                        @include respond-to(small) {
+                            font-size: 35px;
+                        }
+                    }
+                    p {
+                        font-size: 16px;
+                        color: $carbon;
+                        margin-bottom: 30px;
+                    }
+                    .form-group {
+                        margin-bottom: 10px;
+                        @include respond-to(small) {
+                            margin-bottom: 20px;
+                        }
+                        input {
+                            min-height: 40px;
+                            border-color: $carbon;
+                            @include respond-to(small) {
+                                min-height: 50px;
+                            }
+                            &:focus {
+                                @include box-shadow(none);
+                                outline: none;
+                            }
+                            &.invalid {
+                                border-color: #CE1126;
+                            }
+                            &.invalid+label:before {
+                                background-color: #ffdddd;
+                                border-color: #CE1126;
+                            }
+                        }
+                        label {
+                            text-align: left;
+                            display: block;
+                        }
+                        &.radio-group {
+                            text-align: left;
+                        }
+                        .custom-radio {
+                            display: inline-block;
+                            margin-right: 55px;
+                            .custom-control-label {
+                                padding-left: 20px;
+                                padding-top: 8px;
+                                ;
+                                &:after {
+                                    content: "";
+                                    width: 25px;
+                                    height: 25px;
+                                    background: white;
+                                    border: 2px solid $carbon;
+                                    @include respond-to(small) {
+                                        width: 30px;
+                                        height: 30px;
+                                    }
+                                }
+                                &:before {
+                                    display: none;
+                                }
+                            }
+                            .custom-control-input {
+                                &:checked~.custom-control-label {
+                                    &:after {
+                                        content: "";
+                                        background: $dell-blue;
+                                        border: 2px solid $midnight-blue;
+                                    }
+                                }
+                            }
+                            input.invalid+label:after {
+                                background-color: #ffdddd;
+                                border-color: #CE1126;
+                            }
+                        }
+                        &.checkbox-group {
+                            label {
+                                text-align: left;
+                                padding-left: 50px;
+                                line-height: normal;
+                                a {
+                                    text-decoration: underline;
+                                    white-space: nowrap;
+                                }
+                                &:before {
+                                    width: 30px;
+                                    height: 30px;
+                                    background: white;
+                                    left: 0;
+                                    border: 2px solid $carbon;
+                                    @include box-shadow(none);
+                                    @include border-radius(0);
+                                }
+                            }
+                            .custom-control {
+                                margin-bottom: 20px;
+                                padding-left: 0;
+                            }
+                            .custom-control-input {
+                                &:checked~.custom-control-label {
+                                    &:before {
+                                        content: "";
+                                        background: $dell-blue;
+                                        border: 2px solid $midnight-blue;
+                                    }
+                                }
+                            }
+                            .custom-checkbox .custom-control-input:checked~.custom-control-label::after {
+                                display: none;
+                            }
+                        }
+                        &.custom-file {
+                            width: 272px;
+                            height: auto;
+                            margin-top: 5px;
+                            @include respond-to(small) {
+                                width: 400px;
+                            }
+                            input {
+                                position: absolute;
+                                top: 0;
+                                left: 0;
+                                right: 0;
+                                &.invalid+label:before {
+                                    background: none;
+                                    border-color: #CE1126;
+                                }
+                            }
+                            span {
+                                font-size: 14px;
+                                display: block;
+                                &.upload-format {
+                                    margin-top: 15px;
+                                }
+                            }
+                            .custom-file-label {
+                                background: $midnight-blue;
+                                height: auto;
+                                position: relative;
+                                color: white;
+                                margin: 5px;
+                                text-align: center;
+                                border: none;
+                                &:before {
+                                    content: "";
+                                    width: 272px;
+                                    height: 50px;
+                                    padding: 5px;
+                                    position: absolute;
+                                    left: -5px;
+                                    right: 0;
+                                    top: -6px;
+                                    bottom: 0;
+                                    border: 1px solid $carbon;
+                                    @include border-radius(3px);
+                                    @include respond-to(small) {
+                                        width: 400px;
+                                    }
+                                }
+                                &::after {
+                                    content: ""!important;
+                                    display: none;
+                                }
+                            }
+                            .error-message {
+                                color: #CE1126;
+                            }
+                        }
+                    }
+                }
+                .buttons {
+                    text-align: center;
+                    margin-top: 20px;
+                    .btn {
+                        background: $light-blue;
+                        min-width: 110px;
+                        min-height: 40px;
+                        margin: 0 10px;
+                        border: none;
+                        @include respond-to(small) {
+                            min-width: 120px;
+                            min-height: 50px;
+                        }
+                        &:focus {
+                            @include box-shadow(none);
+                        }
+                        &:hover {
+                            background-color: $dell-blue;
+                        }
+                        &.btn-secondary {
+                            background: $midnight-blue;
+                            &:hover {
+                                background-color: $dell-blue;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+#thanksModal {
+    .modal-body {
+        padding: 25px 0;
+        @include respond-to(small) {
+            padding: 50px 0;
+        }
+    }
+}
+
+//Content styles
+.content-section {
+    h2 {
+        font-size: 20px;
+        color: $carbon;
+        font-weight: 700;
+        margin-bottom: 40px;
+        @include respond-to(small) {
+            font-size: 35px;
+        }
+    }
+    h3 {
+        font-size: 16px;
+        font-weight: 700;
+        color: $carbon;
+        margin-bottom: 10px;
+    }
+    p {
+        font-size: 16px;
+        color: $gray;
+        line-height: 24px;
+        .dot {
+            font-size: 34px;
+            position: relative;
+            top: -3px;
+        }
+    }
+    .format-type {
+        margin-bottom: 30px;
+        a {
+            font-size: 16px;
+            color: $gray;
+            font-weight: 700;
+            text-decoration: underline;
+            &:hover {
+                color: $dell-blue;
+            }
+        }
+        &.format-represent {
+            p {
+                margin-bottom: 5px;
+            }
+        }
+    }
+    .format-list {
+        ul {
+            margin: 0;
+            padding: 0 0 0 25px;
+            list-style-type: decimal;
+            li {
+                margin-bottom: 12px;
+                font-size: 16px;
+                line-height: 24px;
+                color: $gray;
+                ul {
+                    list-style-type: none;
+                    counter-reset: mycounter;
+                    margin-top: 10px;
+                    li {
+                        position: relative;
+                        display: block;
+                        counter-increment: mycounter;
+                        &:before {
+                            content: " "counter(mycounter, lower-latin)") ";
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+//server table style
+.server-table {
+    .thead1 {
+        th {
+            background: $dell-blue;
+            color: white;
+        }
+    }
+    .thead2,
+    .thead3 {
+        th {
+            background: $light-blue;
+            color: white;
+        }
+    }
+    tr {
+        td {
+            &:nth-child(6),
+            &:nth-child(7) {
+                background: $quartz;
+            }
+        }
+    }
+}

@@ -1,0 +1,182 @@
+# Official docker image.
+image: docker:latest
+
+stages:
+  - build
+  - test
+  - deploy
+
+variables:
+  MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+  MYSQL_DATABASE: $MYSQL_DATABASE
+
+# Build Phase
+build-production:
+  stage: build
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  script:
+    - docker build --pull -t "$CI_REGISTRY_IMAGE:production" .
+    - docker push "$CI_REGISTRY_IMAGE:production"
+  only:
+    - production
+  except:
+    - staging
+    - master
+
+build-staging:
+  stage: build
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  script:
+    - docker build --pull -t "$CI_REGISTRY_IMAGE:staging" .
+    - docker push "$CI_REGISTRY_IMAGE:staging"
+  only:
+    - staging
+  except:
+    - master
+    - production
+
+build-latest:
+  stage: build
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  script:
+    - docker build --pull -t "$CI_REGISTRY_IMAGE" .
+    - docker push "$CI_REGISTRY_IMAGE"
+  only:
+    - master
+  except:
+    - tags
+
+build-tag:
+  stage: build
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  script:
+    - docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" .
+    - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
+  except:
+    - master
+    - staging
+    - production
+  only:
+    - tags
+
+build-general:
+  stage: build
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  script:
+    - docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" .
+    - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
+  except:
+    - master
+    - staging
+    - production
+    - tags
+
+# Test Phase
+test:
+  image: registry.gitlab.com/cloudyfox/devops/generic-docker-images/build/php-7.3:latest
+  # This is used to categorize jobs. Jobs within the same stage are run in parallel.
+  stage: test
+  services:
+    - mysql:5.7
+  # What to run on the job.
+  script:
+    - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
+    - ./vendor/bin/phpunit --coverage-text --colors=never
+
+# Deploy Phase
+Staging-S3sync-CloudfrontInvalidate:
+  stage: deploy
+  image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest
+  before_script:
+    - export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_STAGE
+    - export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY_STAGE
+    - export S3_BUCKET_NAME=$S3_BUCKET_NAME_STAGE
+    - export DISTRIBUTION_ID=$DISTRIBUTION_ID_STAGE
+  script:
+    - aws s3 sync ./public $S3_BUCKET_NAME --acl public-read --exclude="index.php" --exclude=".htaccess" --exclude="mix-manifest.json" --exclude="robots.txt" --exclude="web.config" --cache-control="max-age=86400" --exclude="./static-html"
+    - aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths '/*'
+    - echo "DEPLOYED SUCCESSFULLY"
+  only:
+    - staging
+  when: manual
+
+Production-S3sync-CloudfrontInvalidate:
+  stage: deploy
+  image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest
+  before_script:
+    - export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_PROD
+    - export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY_PROD
+    - export S3_BUCKET_NAME=$S3_BUCKET_NAME_PROD
+    - export DISTRIBUTION_ID=$DISTRIBUTION_ID_PROD
+  script:
+    - aws s3 sync ./public $S3_BUCKET_NAME --acl public-read --exclude="index.php" --exclude=".htaccess" --exclude="mix-manifest.json" --exclude="robots.txt" --exclude="web.config" --cache-control="max-age=86400" --exclude="./static-html"
+    - aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths '/*'
+    - echo "DEPLOYED SUCCESSFULLY"
+  only:
+    - production
+    - tags
+  when: manual
+
+Staging-ECS:
+  stage: deploy
+  image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest
+  environment:
+    name: staging
+    url: https://staging.laremiseenplus.com
+  before_script:
+    - export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_STAGE
+    - export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY_STAGE
+    - export CI_AWS_ECS_TASK_DEFINITION=$CI_AWS_ECS_TASK_DEFINITION_STAGE
+    - export CI_AWS_ECS_CLUSTER=$CI_AWS_ECS_CLUSTER_STAGE
+    - export CI_AWS_ECS_SERVICE=$CI_AWS_ECS_SERVICE_STAGE
+    - export CI_IMAGE_TAG=staging
+  script:
+    # Tell our service to use the latest version of task definition.
+    - apt-get install -y jq
+    - export TASK_DEFINITION=$(aws ecs describe-task-definition --task-definition $CI_AWS_ECS_TASK_DEFINITION --region $AWS_REGION)
+    - export NEW_TASK_DEFINTIION=$(echo $TASK_DEFINITION | jq --arg IMAGE "$CI_REGISTRY_IMAGE:$CI_IMAGE_TAG" '.taskDefinition | .containerDefinitions[0].image = $IMAGE | del(.taskDefinitionArn) | del(.revision) | del(.status) | del(.requiresAttributes) | del(.compatibilities)')
+    - aws ecs register-task-definition --region $AWS_REGION --cli-input-json "$NEW_TASK_DEFINTIION" > /dev/null
+    - aws ecs update-service --cluster $CI_AWS_ECS_CLUSTER --service $CI_AWS_ECS_SERVICE --desired-count 1 --task-definition $CI_AWS_ECS_TASK_DEFINITION --region $AWS_REGION > /dev/null
+  only:
+    - staging
+  when: manual
+
+Production-ECS:
+  stage: deploy
+  image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest
+  environment:
+    name: production
+    url: https://laremiseenplus.com
+  before_script:
+    - export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID_PROD
+    - export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY_PROD
+    - export CI_AWS_ECS_TASK_DEFINITION=$CI_AWS_ECS_TASK_DEFINITION_PROD
+    - export CI_AWS_ECS_CLUSTER=$CI_AWS_ECS_CLUSTER_PROD
+    - export CI_AWS_ECS_SERVICE=$CI_AWS_ECS_SERVICE_PROD
+    - export CI_IMAGE_TAG=$CI_COMMIT_REF_SLUG
+  script:
+    # Tell our service to use the latest version of task definition.
+    - apt-get install -y jq
+    - export TASK_DEFINITION=$(aws ecs describe-task-definition --task-definition $CI_AWS_ECS_TASK_DEFINITION --region $AWS_REGION)
+    - export NEW_TASK_DEFINTIION=$(echo $TASK_DEFINITION | jq --arg IMAGE "$CI_REGISTRY_IMAGE:$CI_IMAGE_TAG" '.taskDefinition | .containerDefinitions[0].image = $IMAGE | del(.taskDefinitionArn) | del(.revision) | del(.status) | del(.requiresAttributes) | del(.compatibilities)')
+    - aws ecs register-task-definition --region $AWS_REGION --cli-input-json "$NEW_TASK_DEFINTIION" > /dev/null
+    - aws ecs update-service --cluster $CI_AWS_ECS_CLUSTER --service $CI_AWS_ECS_SERVICE --task-definition $CI_AWS_ECS_TASK_DEFINITION --region $AWS_REGION > /dev/null
+  only:
+    - production
+    - tags
+  when: manual
